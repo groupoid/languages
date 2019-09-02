@@ -17,7 +17,7 @@
 <main>
     <section>
         <h3>INTRO</h3>
-        <h3>GRAMMAR</h3>
+        <h3>OPCODES</h3>
 
         <p><font face="monospace" size=3 style="white-space: pre;">
  +---------------------= 32/64-bit
@@ -38,7 +38,7 @@
  +-------------+ +-------------+ +-------------+ +-------------+
  |     MSB     | |             | |             | |     LSB     |
  +-------------+ +-------------+ +-------------+ +-------------+
-    </code></figure>
+    </font></p>
 
         <p><font face="monospace" size=3 style="white-space: pre;">
  <b>0 0 0 0 0 0 0 0 0 0 0 % C6.2.312 UDF</b>
@@ -236,11 +236,9 @@
                        % C6.2.195 PACDA, PACDZA % C6.2.196 PACDB, PACDZB
                        % C6.2.211 REV32 % C6.2.323 XPACD, XPACI, XPACLRI
  1 1 0 1 1 0 1 0 1 1 1 % C6.2.199 PACIB, PACIB1716, PACIBSP, PACIBZ, PACIZB
-    </code></figure>
+    </font></p>
 
-    <h3>APPENDIX B</h3>
-
-    <p>Advanced SIMD and FPU ISA aka NEON:</p>
+        <h3>SIMD NEON</h3>
 
         <p><font face="monospace" size=3 style="white-space: pre;">
 0 x 0 s 1 1 1 0 s s 1 ... 0 | 1 0 1 1 1 0 % C7.2.001 ABS
@@ -511,7 +509,7 @@ x 0 0 1 1 1 1 0 s s 1 ... 1 | 0 0 0 0 0 0 % C7.2.338 UCVTF (scalar, integer)
 0 x 0 0 1 1 1 0 s s 1 ... 1 | 0 0 1 0 1 0 % C7.2.381 XTN, XTN2 - Extract Narrow.
 0 x 0 0 1 1 1 0 s s 0 ... _ | 0 0 1 1 1 0 % C7.2.382 ZIP1 - Zip vectors (primary).
 0 x 0 0 1 1 1 0 s s 0 ... _ | 0 1 1 1 1 0 % C7.2.383 ZIP2 - Zip vectors (secondary).
-    </code></figure>
+    </font></p>
     </section>
 </main>
 <footer>Namdak Tonpa <span class="heart">&nbsp;❤&nbsp;</span> 2009—2019</footer>
