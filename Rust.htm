@@ -122,25 +122,38 @@ trait_method
 ;
 
 type_method
-    : maybe_outer_attrs maybe_unsafe FN ident generic_params fn_decl_with_self_allow_anon_params maybe_where_clause ';'
-    | maybe_outer_attrs CONST maybe_unsafe FN ident generic_params fn_decl_with_self_allow_anon_params maybe_where_clause ';'
-    | maybe_outer_attrs maybe_unsafe EXTERN maybe_abi FN ident generic_params fn_decl_with_self_allow_anon_params maybe_where_clause ';' ;
+    : maybe_outer_attrs maybe_unsafe FN ident generic_params
+      fn_decl_with_self_allow_anon_params maybe_where_clause ';'
+    | maybe_outer_attrs CONST maybe_unsafe FN ident generic_params
+      fn_decl_with_self_allow_anon_params maybe_where_clause ';'
+    | maybe_outer_attrs maybe_unsafe EXTERN maybe_abi FN ident generic_params
+      fn_decl_with_self_allow_anon_params maybe_where_clause ';' ;
 
 method
-    : maybe_outer_attrs maybe_unsafe FN ident generic_params fn_decl_with_self_allow_anon_params maybe_where_clause inner_attrs_and_block
-    | maybe_outer_attrs CONST maybe_unsafe FN ident generic_params fn_decl_with_self_allow_anon_params maybe_where_clause inner_attrs_and_block
-    | maybe_outer_attrs maybe_unsafe EXTERN maybe_abi FN ident generic_params fn_decl_with_self_allow_anon_params maybe_where_clause inner_attrs_and_block ;
+    : maybe_outer_attrs maybe_unsafe FN ident generic_params
+      fn_decl_with_self_allow_anon_params maybe_where_clause inner_attrs_and_block
+    | maybe_outer_attrs CONST maybe_unsafe FN ident generic_params
+      fn_decl_with_self_allow_anon_params maybe_where_clause inner_attrs_and_block
+    | maybe_outer_attrs maybe_unsafe EXTERN maybe_abi FN ident generic_params
+      fn_decl_with_self_allow_anon_params maybe_where_clause inner_attrs_and_block ;
 
 impl_method
-    : attrs_and_vis maybe_default maybe_unsafe FN ident generic_params fn_decl_with_self maybe_where_clause inner_attrs_and_block
-    | attrs_and_vis maybe_default CONST maybe_unsafe FN ident generic_params fn_decl_with_self maybe_where_clause inner_attrs_and_block
-    | attrs_and_vis maybe_default maybe_unsafe EXTERN maybe_abi FN ident generic_params fn_decl_with_self maybe_where_clause inner_attrs_and_block ;
+    : attrs_and_vis maybe_default maybe_unsafe FN ident generic_params
+      fn_decl_with_self maybe_where_clause inner_attrs_and_block
+    | attrs_and_vis maybe_default CONST maybe_unsafe FN ident generic_params
+      fn_decl_with_self maybe_where_clause inner_attrs_and_block
+    | attrs_and_vis maybe_default maybe_unsafe EXTERN maybe_abi FN ident generic_params
+      fn_decl_with_self maybe_where_clause inner_attrs_and_block ;
 
 item_impl
-    : maybe_default_maybe_unsafe IMPL generic_params ty_prim_sum maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
-    | maybe_default_maybe_unsafe IMPL generic_params '(' ty ')' maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
-    | maybe_default_maybe_unsafe IMPL generic_params trait_ref FOR ty_sum maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
-    | maybe_default_maybe_unsafe IMPL generic_params '!' trait_ref FOR ty_sum maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
+    : maybe_default_maybe_unsafe IMPL generic_params
+      ty_prim_sum maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
+    | maybe_default_maybe_unsafe IMPL generic_params
+      '(' ty ')' maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
+    | maybe_default_maybe_unsafe IMPL generic_params
+      trait_ref FOR ty_sum maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
+    | maybe_default_maybe_unsafe IMPL generic_params
+      '!' trait_ref FOR ty_sum maybe_where_clause '{' maybe_inner_attrs maybe_impl_items '}'
     | maybe_default_maybe_unsafe IMPL generic_params trait_ref FOR DOTDOT '{' '}'
     | maybe_default_maybe_unsafe IMPL generic_params '!' trait_ref FOR DOTDOT '{' '}' ;
 
