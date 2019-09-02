@@ -1,0 +1,537 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Namdak Tonpa" />
+    <title>BSV</title>
+    <link rel="stylesheet" href="https://n2o.dev/blank.css" />
+    <link rel="stylesheet" href="https://tonpa.guru/journal.css" />
+</head>
+<body>
+<nav>
+    <a href='index.html'>Languages</a>
+    <a href='#'>BSV</a>
+</nav>
+<main>
+  <article>
+    <section>
+       <h3>INTRO</h3>
+        <p></p>
+       <h3>GRAMMAR</h3>
+    <figure><code style="font-size:8pt;">
+Meta notation:
+
+  Terminal                   'x'      i.e., with single quotes
+  Non-terminal                x       i.e., without single quotes
+  Alternatives                x | y
+  Optional item               [ x ]
+  0 or more occurrences       { x }
+  Comments                    // comment
+
+package ::             ::= 'package' packageIde ';'
+                              { exportDecl }
+                              { importDecl }
+                              { packageStmt }
+                            'endpackage' [ ':' packageIde ]
+
+exportDecl             ::= 'export' exportItem { ',' exportItem } ';'
+exportItem             ::= identifier [ '('  '..'  ')' ]
+                         | Identifier [ '('  '..'  ')' ]
+                         | packageIde '::'  '*'
+
+importDecl             ::= 'import' importItem { ',' importItem } ';'
+importItem             ::= packageIde '::'  '*'
+
+packageStmt            ::= interfaceDecl
+                         | typeDef
+                         | typeclassDef
+                         | typeclassInstanceDef
+                         | externModuleImport
+                         | externCImport
+                         | varDecl
+                         | functionDef
+                         | moduleDef
+
+packageIde             ::= Identifier
+
+interfaceDecl          ::= [ attributeInstances ]
+                           'interface' typeDefType ';'
+                              { interfaceMemberDecl }
+                           'endinterface' [ ':' typeIde ]
+
+interfaceMemberDecl    ::= methodProto | subinterfaceDecl
+
+methodProto            ::= [ attributeInstances ]
+                           'method' type identifier [ '(' methodProtoFormals ')' ] ';'
+methodProtoFormals     ::= methodProtoFormal { ',' methodProtoFormal }
+methodProtoFormal      ::= [ attributeInstances ] type identifier
+
+subinterfaceDecl       ::= [ attributeInstances ]
+                           'interface' type identifier;
+
+typeDef                ::= typedefSynonym
+                         | typedefEnum
+                         | typedefStruct
+                         | typedefTaggedUnion
+
+typeDefType            ::= typeIde [ typeFormals ]
+typeFormals            ::= '#' '(' typeFormal { ',' typeFormal } ')'
+typeFormal             ::= [ 'numeric' ] 'type' typeIde
+
+typedefSynonym         ::= 'typedef' type typeDefType ';'
+
+typedefEnum            ::= 'typedef' 'enum' { typedefEnumElements } Identifier [ derives ] ';'
+typedefEnumElements    ::= typedefEnumElement { ',' typedefEnumElement }
+typedefEnumElement     ::= Identifier [ '=' intLiteral ]
+                         | Identifier '[' intLiteral ']' [ '=' intLiteral ]
+                         | Identifier '[' intLiteral ':' intLiteral ']' [ '=' intLiteral ]
+
+typedefStruct          ::= 'typedef' 'struct' '{'
+                              { structMember }
+                           '}' typeDefType [ derives ] ';'
+
+typedefTaggedUnion     ::= 'typedef' 'union' 'tagged' '{'
+                              { unionMember }
+                           '}' typeDefType [ derives ] ';'
+
+structMember           ::= type identifier ';'
+                         | subUnion identifier ';'
+
+unionMember            ::= type Identifier ';'
+                         | subStruct Identifier ';'
+                         | subUnion Identifier ';'
+                         | 'void' Identifier ';'
+
+subStruct              ::= 'struct' '{'
+                              { structMember }
+                           '}'
+subUnion               ::= 'union' 'tagged' '{'
+                              { unionMember }
+                           '}'
+
+derives                ::= 'deriving' '(' typeclassIde { ',' typeclassIde } ')'
+
+varDecl                ::= type varInit { ',' varInit } ';'
+                         | type    identifier '&#60;-' expression ';'
+                         | 'let'   identifier '='  expression ';'
+                         | 'let'   identifier '&#60;-' expression ';'
+                         | 'match' pattern    '='  expression ';'
+
+varInit                ::= identifier [ arrayDims ] [ '=' expression ]
+arrayDims              ::= '[' expression ']' { '[' expression ']' }
+
+typeclassDef           ::= 'typeclass' typeclassIde typeFormals [ provisos ] [ typedepends ] ';'
+                              { overloadedDef }
+                           'endtypeclass' [ ':' typeclassIde ]
+typeclassIde           ::= Identifier
+
+typeFormals            ::= '#' '(' typeFormal { ',' typeFormal } ')'
+typeFormal             ::= [ 'numeric' ] 'type' typeIde
+typedepends            ::= 'dependencies' '(' typedepend { ',' typedepend } ')'
+typedepend             ::= typelist 'determines' typelist
+typelist               ::= typeIde
+                         | '(' typeIde { ',' typeIde } ')'
+overloadedDef          ::= functionProto
+                         | moduleProto
+                         | varDecl
+
+typeclassInstanceDef   ::= 'instance' typeclassIde '#' '(' type { ',' type } ')' [ provisos ] ';'
+                              { varAssign ';' | functionDef | moduleDef }
+                           'endinstance' [ ':' typeclassIde ]
+
+moduleDef              ::= [ attributeInstances ]
+                           moduleProto
+                              { moduleStmt }
+                           'endmodule' [ ':' identifier ]
+moduleProto            ::= 'module' [ '[' type ']' ] identifier
+                              [ moduleFormalParams ]
+                              '(' [ moduleFormalArgs ] ')' [ provisos ] ';'
+moduleFormalParams     ::= '#' '(' moduleFormalParam { ',' moduleFormalParam } ')'
+moduleFormalParam      ::= [ attributeInstances ] [ 'parameter' ] type identifier
+moduleFormalArgs       ::= [ attributeInstances ] type
+                         | [ attributeInstances ] type identifier
+                           { ',' [ attributeInstances ] type identifier }
+moduleStmt             ::= moduleInst
+                         | methodDef
+                         | subinterfaceDef
+                         | rule
+                         | Stmt
+
+
+moduleInst             ::= [ attributeInstances ]
+                         | type identifier '&#60;-' moduleApp ';'
+moduleApp              ::= identifier
+                           [ '(' moduleActualParamArg { ',' moduleActualParamArg }  ')' ]
+
+moduleActualParamArg   ::= expression
+                         | 'clocked_by' expression
+                         | 'reset_by'   expression
+
+moduleInst             ::= [ attributeInstances ]
+                           type identifier '(' ')' ';'
+                           moduleApp2 identifier [ '(' moduleActualArgs ')' ] ';'
+moduleApp2             ::= identifier [ '#' '(' moduleActualParam { ',' moduleActualParam } ')' ]
+moduleActualParam      ::= expression
+moduleActualArgs       ::= moduleActualArg { ',' moduleActualArg }
+moduleActualArg        ::= expression
+                         | 'clocked_by' expression
+                         | 'reset_by'   expression
+
+methodDef              ::= 'method' [ type ] identifier [ '(' [ methodFormals ] ')' ] [ implicitCond ] ';'
+                              functionBody
+                           'endmethod' [ ':' identifier ]
+methodFormals          ::= methodFormal { ',' methodFormal }
+methodFormal           ::= [ type ] identifier
+implicitCond           ::= 'if' '(' condPredicate ')'
+
+subinterfaceDef        ::= 'interface' Identifier identifier ';'
+                              { interfaceStmt }
+                           'endinterface' [ ':' identifier ]
+interfaceStmt          ::= methodDef
+                         | subinterfaceDef
+
+methodDef              ::= 'method' [ type ] identifier '(' methodFormals ')' [ implicitCond ]
+                               '=' expression ';'
+subinterfaceDef        ::= 'interface' [ type ] identifier '=' expression ';'
+
+rule                   ::= [ attributeInstances ]
+                           'rule' identifier [ ruleCond ] ';'
+                               ruleBody
+                           'endrule' [ ':' identifier ]
+ruleCond               ::= '(' condPredicate ')'
+ruleBody               ::= { actionStmt }
+
+functionDef            ::= [ attributeInstances ]
+                           functionProto
+                              { Stmt }
+                           'endfunction' [ ':' identifier ]
+                         | functionProto '=' expression ';'
+
+functionProto          ::= 'function' type identifier [ '(' functionFormals ')' ] [ provisos ] ';'
+functionFormals        ::= functionFormal { ',' functionFormal }
+functionFormal         ::= type identifier
+
+externCImport          ::= 'import' '"BDPI"' [ identifier '=' ]
+                               'function' type identifier '(' [ CFuncArgs ] ')' [ provisos ] ';'
+
+CFuncArgs              ::= CFuncArg { ',' CFuncArg }
+CFuncArg               ::= type [ identifier ]
+
+varAssign              ::= lValue '=' expression ';'
+                         | identifier '&#60;-' expression ';'
+
+lValue                 ::= identifier
+                         | lValue '.' identifier
+                         | lValue '[' expression ']'
+                         | lValue '[' expression ':' expression ']'
+
+type                   ::= typePrimary
+                         | typePrimary ( type { ',' type } )
+
+typePrimary            ::= typeIde [ '#' '(' type { ',' type } ')' ]
+                         | typeNat
+                         | 'bit' [ typeNat ':' typeNat ]
+
+typeIde                ::= Identifier
+                         | 'SizeOf'
+
+typeNat                ::= decDigits
+
+expression             ::= condExpr
+                         | operatorExpr
+                         | exprPrimary
+
+condExpr               ::= condPredicate '?' expression ':' expression
+
+operatorExpr           ::= unop expression
+                         | expression binop expression
+
+unop                   ::= '+' | '-' | '!' | '~'
+                         | '&'
+                         | '~&#38;'
+                         | '|'
+                         | '~|'
+                         | '^'
+                         | '^~' | '~^'
+binop                  ::= '*' | '/' | '%'
+                         | '+' | '-'
+                         | '&#60;&#60;' | '&#62;&#62;'
+                         | '&#60;=' | '&#62;=' | '&#60;' | '&#62;'
+                         | '==' | '!='
+                         | '&#38;'
+                         | '^'
+                         | '^~' | '~^'
+                         | '|'
+                         | '&#38;&#38;'
+                         | '||'
+
+exprPrimary            ::= '(' expression ')'
+                         | exprPrimary '.' identifier
+                         | identifier
+                         | intLiteral
+                         | realLiteral
+                         | stringLiteral
+                         | '?'
+                         | 'valueof' '(' type ')'
+                         | 'valueOf' '(' type ')'
+             | 'return' expression ';'
+                         | bitConcat
+                         | bitSelect
+                         | functionCall
+                         | methodCall
+                         | typeAssertion
+                         | structExpr
+                         | taggedUnionExpr
+                         | interfaceExpr
+                         | rulesExpr
+                         | beginEndBlock
+                         | actionBlock
+                         | actionValueBlock
+             | seqFsmStmt
+             | parFsmStmt
+
+bitConcat              ::= '{' expression { ',' expression } '}'
+bitSelect              ::= exprPrimary '[' expression [ ':' expression ] ']'
+
+functionCall           ::= exprPrimary [ '(' [ expression { ',' expression } ] ')' ]
+methodCall             ::= exprPrimary '.' identifier [ '(' [ expression { ',' expression } ] ')' ]
+
+typeAssertion          ::= type '’' bitConcat
+                         | type '’' '(' expression ')'
+
+structExpr             ::= Identifier '{' memberBind { ',' memberBind } '}'
+taggedUnionExpr        ::= 'tagged' Identifier '{' memberBind { ',' memberBind } '}'
+                         | 'tagged' Identifier exprPrimary
+memberBind             ::= identifier ':' expression
+
+interfaceExpr          ::= 'interface' Identifier ';'
+                              { interfaceStmt }
+                           'endinterface' [ ':' Identifier ]
+interfaceStmt          ::= methodDef
+                         | subinterfaceDef
+                         | expressionStmt
+
+rulesExpr              ::= [ attributeInstances ]
+                           'rules' [ ':' identifier ]
+                               rulesStmt
+                           'endrules' [ ':' identifier ]
+rulesStmt              ::= rule
+                         | expressionStmt
+
+BeginEndBlock          ::= 'begin' [ ':' identifier ]
+                              { Stmt }
+                              expression
+                           'end' [ ':' identifier ]
+
+actionBlock            ::= 'action' [ ':' identifier ]
+                              { Stmt }
+                           'endaction' [ ':' identifier ]
+
+actionValueBlock       ::= 'actionvalue' [ ':' identifier ]
+                              { Stmt }
+                           'endactionvalue' [ ':' identifier ]
+
+regWrite               ::= expression '&#60;=' expression
+
+Stmt                   ::= expression
+                         | varDecl
+                         | varAssign
+                         | functionDef
+                         | moduleDef
+                         | BeginEndBlock
+                         | If
+                         | Case
+                         | For
+                         | While
+
+If                     ::= 'if' '(' condPredicate ')'
+                              Stmt
+                           [ 'else'
+                              Stmt ]
+
+Case                   ::= 'case' '(' expression ')'
+                              { CaseItem }
+                              [ DefaultItem ]
+                           'endcase'
+
+                         | 'case' '(' expression ')' 'matches'
+                              { CasePatItem }
+                              [ DefaultItem ]
+                           'endcase'
+CaseItem               ::= expression { , expression } ':' Stmt
+CasePatItem            ::= pattern { '&#38;&#38;&#38;' expression } ':' Stmt
+DefaultItem            ::= 'default' [ ':' ] Stmt
+
+While                  ::= 'while' '(' expression ')'
+                              Stmt
+For                    ::= 'for' '(' forInit ';' forTest ';' forIncr ')'
+                              Stmt
+forInit                ::= forOldInit | forNewInit
+forOldInit             ::= simpleVarAssign { ',' simpleVarAssign }
+simpleVarAssign        ::= identifier '=' expression
+forNewInit             ::= type identifier '=' expression { ',' simpleVarDeclAssign }
+simpleVarDeclAssign    ::= [ type ] identifier '=' expression
+forTest                ::= expression
+forIncr                ::= varIncr { ',' varIncr }
+varIncr                ::= identifier = expression
+
+condPredicate          ::= exprOrCondPattern { '&#38;&#38;&#38;' exprOrCondPattern }
+exprOrCondPattern      ::= expression
+                         | expression 'matches' pattern
+
+pattern                ::= '.' identifier
+                         | '.*'
+                         | constantPattern
+                         | taggedUnionPattern
+                         | structPattern
+                         | tuplePattern
+
+constantPattern        ::= intLiteral
+                         | realLiteral
+                         | stringLiteral
+                         | Identifier
+
+taggedUnionPattern     ::= 'tagged' Identifier [ pattern ]
+structPattern          ::= 'tagged' Identifier '{' identifier ':' pattern { ',' identifier ':' pattern } '}'
+tuplePattern           ::= '{' pattern { ',' pattern } '}'
+
+attributeInstances     ::= attributeInstance
+                           { attributeInstance }
+attributeInstance      ::= '(*' attrSpec { ',' attrSpec } '*)'
+attrSpec               ::= attrName [ '=' expression ]
+attrName               ::= identifier
+                         | Identifier
+
+provisos               ::= 'provisos' '(' proviso { ',' proviso } ')'
+proviso                ::= Identifier '#' '(' type { ',' type } ')'
+
+fsmStmt                ::= exprFsmStmt
+                         | seqFsmStmt
+                         | parFsmStmt
+                         | ifFsmStmt
+                         | whileFsmStmt
+                         | repeatFsmStmt
+                         | forFsmStmt
+                         | returnFsmStmt
+
+exprFsmStmt            ::= regWrite ';'
+                         | expression ';'
+
+seqFsmStmt             ::= 'seq' fsmStmt { fsmStmt } 'endseq'
+
+parFsmStmt             ::= 'par' fsmStmt { fsmStmt } 'endpar'
+
+ifFsmStmt              ::= 'if' expression fsmStmt
+                           [ 'else' fsmStmt ]
+
+returnFsmStmt          ::= 'return' ';'
+
+whileFsmStmt           ::= 'while' '(' expression ')'
+                              loopBodyFsmStmt
+
+forFsmStmt             ::= 'for' '(' fsmStmt ';' expression ';' fsmStmt ')'
+                              loopBodyFsmStmt
+
+repeatFsmStmt          ::= 'repeat' '(' expression ')'
+                              loopBodyFsmStmt
+
+loopBodyFsmStmt        ::= fsmStmt
+                         | 'break' ';'
+                         | 'continue' ';'
+
+Action
+  ActionValue
+  BVI
+  C
+  CF
+  E
+  SB
+  SBR
+  action                            endaction
+  actionvalue                       endactionvalue
+  ancestor
+  begin
+  bit
+  case                              endcase
+  clocked_by
+  default
+  default_clock
+  default_reset
+  dependencies
+  deriving
+  determines
+  e
+  else
+  enable
+  end
+  enum
+  export
+  for
+  function                          endfunction
+  if
+  ifc_inout
+  import
+  inout
+  input_clock
+  input_reset
+  instance                          endinstance
+  interface                         endinterface
+  let
+  match
+  matches
+  method                            endmethod
+  module                            endmodule
+  numeric
+  output_clock
+  output_reset
+  package                           endpackage
+  parameter
+  path
+  port
+  provisos
+  ready
+  reset_by
+  return
+  rule                              endrule
+  rules                             endrules
+  same_family
+  schedule
+  struct
+  tagged
+  type
+  typeclass                         endtypeclass
+  typedef
+  union
+  valueOf
+  valueof
+  void
+  while
+
+
+displayTaskName        ::= '$display'  | '$displayb'  | '$displayo'  | '$displayh'
+                         | '$write'    | '$writeb'    | '$writeo'    | '$writeh'
+                         | '$format'
+                         | '$fopen'    | '$fclose'
+                         | '$fdisplay' | '$fdisplayb' | '$fdisplayo' | '$fdisplayh'
+                         | '$fwrite'   | '$fwriteb'   | '$fwriteo'   | '$fwriteh'
+                         | '$swrite'   | '$swriteb'   | '$swriteo'   | '$swriteh'   | '$sformat'
+                         | '$swriteAV' | '$swritebAV' | '$swriteoAV' | '$swritehAV' | '$sformatAV'
+                         | '$fgetc'    | '$fungetc'
+                         | '$fflush'
+                         | '$finish'
+                         | '$stop'
+                         | '$dumpvars' | '$dumpon'    | '$dumpoff'
+                         | '$time'     | '$stime'
+                         | '$realtobits'
+                         | '$bitstoreal'
+                         | '$test$plusargs'
+
+    </code></figure>
+    </section>
+  </article>
+</main>
+<footer>Namdak Tonpa <span class="heart"> ❤ </span> Timeless</footer>
+</body>
+</html>
