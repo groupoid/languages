@@ -1,0 +1,102 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Namdak Tonpa" />
+    <title>Smalltalk</title>
+    <link rel="stylesheet" href="https://n2o.dev/blank.css" />
+    <link rel="stylesheet" href="https://tonpa.guru/journal.css" />
+</head>
+<body>
+<nav>
+    <a href='index.html'>Languages</a>
+    <a href='#'>Smalltalk</a>
+</nav>
+<main>
+  <article>
+    <section>
+       <h3>INTRO</h3>
+        <p></p>
+       <h3>GRAMMAR</h3>
+    <figure><code style="font-size:8pt;">
+  Character = ? Any Unicode character ?;
+  WhitespaceCharacter = ? Any space, newline or horizontal tab character ?;
+  DecimalDigit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+  Letter = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M"
+         | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+         | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m"
+         | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z";
+  CommentCharacter = Character - '"';
+  Comment = '"', {CommentCharacter}, '"';
+  OptionalWhitespace = {WhitespaceCharacter | Comment};
+  Whitespace = (WhitespaceCharacter | Comment), OptionalWhitespace;
+  LetterOrDigit = DecimalDigit | Letter;
+  Identifier = (Letter | "_"), {(LetterOrDigit | "_")};
+  Reference = Identifier;
+  ConstantReference = "nil" | "false" | "true";
+  PseudoVariableReference = "self" | "super" | "thisContext";
+  ReservedIdentifier = PseudoVariableReference | ConstantReference;
+  BindableIdentifier = Identifier - ReservedIdentifier;
+  UnaryMessageSelector = Identifier;
+  Keyword = Identifier, ":";
+  KeywordMessageSelector = Keyword, {Keyword};
+  BinarySelectorChar = "~" | "!" | "@" | "%" | "&" | "*" | "-" | "+" | "=" | "|" | "\" | "<" | ">" | "," | "?" | "/";
+  BinaryMessageSelector = BinarySelectorChar, [BinarySelectorChar];
+  IntegerLiteral = ["-"], UnsignedIntegerLiteral;
+  UnsignedIntegerLiteral = DecimalIntegerLiteral | Radix, "r", BaseNIntegerLiteral;
+  DecimalIntegerLiteral = DecimalDigit, {DecimalDigit};
+  Radix = DecimalIntegerLiteral;
+  BaseNIntegerLiteral = LetterOrDigit, {LetterOrDigit};
+  ScaledDecimalLiteral = ["-"], DecimalIntegerLiteral, [".", DecimalIntegerLiteral], "s", [DecimalIntegerLiteral];
+  FloatingPointLiteral = ["-"], DecimalIntegerLiteral, (".", DecimalIntegerLiteral, [Exponent] | Exponent);
+  Exponent = ("e" | "d" | "q"), [["-"], DecimalIntegerLiteral];
+  CharacterLiteral = "$", Character;
+  StringLiteral = "'", {StringLiteralCharacter | "''"}, "'";
+  StringLiteralCharacter = Character - "'";
+  SymbolInArrayLiteral = UnaryMessageSelector - ConstantReference | KeywordMessageSelector | BinaryMessageSelector;
+  SymbolLiteral = "#", (SymbolInArrayLiteral | ConstantReference | StringLiteral);
+  ArrayLiteral = ObjectArrayLiteral | ByteArrayLiteral;
+  ObjectArrayLiteral = "#", NestedObjectArrayLiteral;
+  NestedObjectArrayLiteral = "(", OptionalWhitespace, [LiteralArrayElement, {Whitespace, LiteralArrayElement}], OptionalWhitespace, ")";
+  LiteralArrayElement = Literal - BlockLiteral | NestedObjectArrayLiteral | SymbolInArrayLiteral | ConstantReference;
+  ByteArrayLiteral = "#[", OptionalWhitespace, [UnsignedIntegerLiteral, {Whitespace, UnsignedIntegerLiteral}], OptionalWhitespace,"]";
+  FormalBlockArgumentDeclaration = ":", BindableIdentifier;
+  FormalBlockArgumentDeclarationList = FormalBlockArgumentDeclaration, {Whitespace, FormalBlockArgumentDeclaration};
+  BlockLiteral = "[", [OptionalWhitespace, FormalBlockArgumentDeclarationList, OptionalWhitespace, "|"], ExecutableCode, OptionalWhitespace, "]";
+  Literal = ConstantReference | IntegerLiteral | ScaledDecimalLiteral  | FloatingPointLiteral
+          | CharacterLiteral | StringLiteral | SymbolLiteral | ArrayLiteral | BlockLiteral;
+  NestedExpression = "(", Statement, OptionalWhitespace, ")";
+  Operand = Literal | Reference | NestedExpression;
+  UnaryMessage = UnaryMessageSelector;
+  UnaryMessageChain = {OptionalWhitespace, UnaryMessage};
+  BinaryMessageOperand = Operand, UnaryMessageChain;
+  BinaryMessage = BinaryMessageSelector, OptionalWhitespace, BinaryMessageOperand;
+  BinaryMessageChain = {OptionalWhitespace, BinaryMessage};
+  KeywordMessageArgument = BinaryMessageOperand, BinaryMessageChain;
+  KeywordMessageSegment = Keyword, OptionalWhitespace, KeywordMessageArgument;
+  KeywordMessage = KeywordMessageSegment, {OptionalWhitespace, KeywordMessageSegment};
+  MessageChain = UnaryMessage, UnaryMessageChain, BinaryMessageChain, [KeywordMessage]
+               | BinaryMessage, BinaryMessageChain, [KeywordMessage] | KeywordMessage;
+  CascadedMessage = ";", OptionalWhitespace, MessageChain;
+  Expression = Operand, [OptionalWhitespace, MessageChain, {OptionalWhitespace, CascadedMessage}];
+  AssignmentOperation = OptionalWhitespace, BindableIdentifier, OptionalWhitespace, ":=";
+  Statement = {AssignmentOperation}, OptionalWhitespace, Expression;
+  MethodReturnOperator = OptionalWhitespace, "^";
+  FinalStatement = [MethodReturnOperator], Statement;
+  LocalVariableDeclarationList = OptionalWhitespace, "|", OptionalWhitespace, [BindableIdentifier, {Whitespace, BindableIdentifier}], OptionalWhitespace, "|";
+  ExecutableCode = [LocalVariableDeclarationList], [{Statement, OptionalWhitespace, "."}, FinalStatement, ["."]];
+  UnaryMethodHeader = UnaryMessageSelector;
+  BinaryMethodHeader = BinaryMessageSelector, OptionalWhitespace, BindableIdentifier;
+  KeywordMethodHeaderSegment = Keyword, OptionalWhitespace, BindableIdentifier;
+  KeywordMethodHeader = KeywordMethodHeaderSegment, {Whitespace, KeywordMethodHeaderSegment};
+  MethodHeader = UnaryMethodHeader | BinaryMethodHeader | KeywordMethodHeader;
+  MethodDeclaration = OptionalWhiteSpace, MethodHeader, ExecutableCode;
+     </code></figure>
+    </section>
+  </article>
+</main>
+<footer>CCC <span class="heart"> ❤ </span> SMC</footer>
+</body>
+</html>
