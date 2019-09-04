@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="Namdak Tonpa" />
+    <title>BASIC</title>
+    <link rel="stylesheet" href="https://n2o.dev/blank.css" />
+    <link rel="stylesheet" href="https://tonpa.guru/journal.css" />
+</head>
+<body>
+<nav>
+    <a href='index.html'>Languages</a>
+    <a href='#'>BASIC</a>
+</nav>
+<main>
+  <article>
+    <section>
+       <h3>INTRO</h3>
+        <p></p>
+       <h3>GRAMMAR</h3>
+    <figure><code style="font-size:8pt;">
+Unary_Op 	::= 	-    |    !
+Binary_Op 	::= 	+    |    -    |    *    |    /    |    %
+	  	| 	=    |    <    |    >    |    <=   |    >=    |    <>
+  		| 	&    |    '    |    '
+Expression 	::= 	integer
+  		| 	variable
+  		| 	"string"
+  		| 	Unary_Op   Expression
+  		| 	Expression   Binary_Op   Expression
+  		| 	( Expression )
+Command 	::= 	REM string
+  		| 	GOTO integer
+  		| 	LET variable = Expression
+  		| 	PRINT Expression
+  		| 	INPUT variable
+  		| 	IF Expression THEN integer
+ 
+Line 		::= 	integer Command
+ 
+Program 	::= 	Line
+  		| 	Line Program
+ 
+Phrase 		::= 	Line | RUN | LIST | END
+    </code></figure>
+    </section>
+  </article>
+</main>
+<footer>CCC <span class="heart"> ❤ </span> SMC</footer>
+</body>
+</html>
