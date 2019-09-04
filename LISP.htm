@@ -21,13 +21,14 @@
         <p></p>
        <h3>GRAMMAR</h3>
     <figure><code style="font-size:8pt;">
-s_expression  ::= atomic_symbol "(" s_expression "."s_expression ")" list 
-list          ::= "(" s_expression < s_expression > ")"
-atomic_symbol ::= letter atom_part
-atom_part     ::= empty / letter atom_part / number atom_part
-letter        ::= "a" / "b" / " ..." / "z"
-number        ::= "1" / "2" / " ..." / "9"
-empty         ::= " "
+s_expression  ::= atomic_symbol | "(" s_expression "." s_expression ")" | list .
+slist         ::= s_expression slist | s_expression .
+list          ::= "(" s_expression slist ")" .
+atomic_symbol ::= letter atom_part .
+atom_part     ::= empty | letter atom_part | number atom_part .
+letter        ::= [a-zA-Z]
+number        ::= [0-9]
+empty         ::= " ".
    </code></figure>
     </section>
   </article>
