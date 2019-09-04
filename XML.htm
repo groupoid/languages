@@ -57,7 +57,7 @@ Misc 		::= 	Comment | PI |  S
 
 doctypedecl 	::= 	'&#60;!DOCTYPE' S Name (S ExternalID)? S? ('[' (markupdecl | PEReference | S)* ']' S?)? '&#62;'
 markupdecl 	::= 	elementdecl |  AttlistDecl |  EntityDecl |  NotationDecl | PI |  Comment
- Subset
+
 extSubset 	::= 	TextDecl? extSubsetDecl
 extSubsetDecl 	::= 	( markupdecl | conditionalSect | PEReference | S )*
 
@@ -111,7 +111,7 @@ ignoreSectContents 	::= 	Ignore ('<![' ignoreSectContents ']]>' Ignore)*
 Ignore 		::= 	Char* - (Char* ('<![' | ']]>') Char*)
 
 CharRef 	::= 	'&#' [0-9]+ ';' | '&#x' [0-9a-fA-F]+ ';'
-eference
+
 Reference 	::= 	EntityRef |  CharRef
 EntityRef 	::= 	'&' Name ';'
 PEReference 	::= 	'%' Name ';'
