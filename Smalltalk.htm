@@ -42,7 +42,7 @@
   UnaryMessageSelector = Identifier;
   Keyword = Identifier, ":";
   KeywordMessageSelector = Keyword, {Keyword};
-  BinarySelectorChar = "~" | "!" | "@" | "%" | "&" | "*" | "-" | "+" | "=" | "|" | "\" | "<" | ">" | "," | "?" | "/";
+  BinarySelectorChar = "~" | "!" | "@" | "%" | "&#38;" | "*" | "-" | "+" | "=" | "|" | "\" | "&#60;" | "&#62;" | "," | "?" | "/";
   BinaryMessageSelector = BinarySelectorChar, [BinarySelectorChar];
   IntegerLiteral = ["-"], UnsignedIntegerLiteral;
   UnsignedIntegerLiteral = DecimalIntegerLiteral | Radix, "r", BaseNIntegerLiteral;

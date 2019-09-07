@@ -19,7 +19,7 @@
         <h3>INTRO</h3>
         <h3>OPCODES</h3>
 
-        <p><font face="monospace" size=3 style="white-space: pre;">
+        <p><font face="monospace" size="3" style="white-space: pre;">
  +---------------------= 32/64-bit
  |
  |
@@ -40,7 +40,7 @@
  +-------------+ +-------------+ +-------------+ +-------------+
     </font></p>
 
-        <p><font face="monospace" size=3 style="white-space: pre;">
+        <p><font face="monospace" size="3" style="white-space: pre;">
  <b>0 0 0 0 0 0 0 0 0 0 0 % C6.2.312 UDF</b>
  <b>0 x 0 0 1 0 0 0 0 0 0 % C6.2.286 STXRB % C6.2.253 STLXRB % C6.2.254 STLXRH</b>
  0 x 0 0 1 0 0 0 0 i 1 % C6.2.039 CASP, CASPA, CASPAL, CASPL
@@ -240,7 +240,7 @@
 
         <h3>SIMD NEON</h3>
 
-        <p><font face="monospace" size=3 style="white-space: pre;">
+        <p><font face="monospace" size="3" style="white-space: pre;">
 0 x 0 s 1 1 1 0 s s 1 ... 0 | 1 0 1 1 1 0 % C7.2.001 ABS
 0 x 0 s 1 1 1 0 s s 1 ... _ | 1 0 0 0 0 1 % C7.2 002 ADD (vector)
 0 x 0 0 1 1 1 0 s s 1 ... _ | 0 1 0 0 0 0 % C7.2.003 ADDHN, ADDHN2
@@ -304,12 +304,12 @@ x 0 0 1 1 1 1 0 x x 1 ... _ | 0 0 0 0 0 0 % C7.2.124 FMOV (general)
 0 x 0 0 1 1 0 0 0 1 0 ... 0 | 0 0 0 0 s s % C7.2.171 LD4 (multiple structures)
 0 x 0 0 1 1 0 1 i 1 1 ... _ | 1 1 1 0 s s % C7.2.173 LD4R
 0 x 0 0 1 1 0 1 i 1 1 ... _ | x x 1 s s s % C7.2.172 LD4 (single structure)
-x x 1 0 1 1 0 0 0 1 _ ... _ | _ _ _ _ _ _ % C7.2.174 LDNP (SIMD&FP)
-x x 1 0 1 1 0 i i 1 _ ... _ | _ _ _ _ _ _ % C7.2.175 LDP (SIMD&FP)
-x x 1 1 1 1 0 0 x 1 0 ... _ | _ _ _ _ 0 1 % C7.2.176 LDR (immediate, SIMD&FP)
-x x 0 1 1 1 0 0 _ _ _ ... _ | _ _ _ _ _ _ % C7.2.177 LDR (literal, SIMD&FP)
-x x 1 1 1 1 0 0 x 1 1 ... _ | _ _ _ _ 1 0 % C7.2.178 LDR (register, SIMD&FP)
-x x 1 1 1 1 0 0 x 1 0 ... _ | _ _ _ _ 0 0 % C7.2.179 LDUR (SIMD&FP)
+x x 1 0 1 1 0 0 0 1 _ ... _ | _ _ _ _ _ _ % C7.2.174 LDNP (SIMD and FP)
+x x 1 0 1 1 0 i i 1 _ ... _ | _ _ _ _ _ _ % C7.2.175 LDP (SIMD and FP)
+x x 1 1 1 1 0 0 x 1 0 ... _ | _ _ _ _ 0 1 % C7.2.176 LDR (immediate, SIMD and FP)
+x x 0 1 1 1 0 0 _ _ _ ... _ | _ _ _ _ _ _ % C7.2.177 LDR (literal, SIMD and FP)
+x x 1 1 1 1 0 0 x 1 1 ... _ | _ _ _ _ 1 0 % C7.2.178 LDR (register, SIMD and FP)
+x x 1 1 1 1 0 0 x 1 0 ... _ | _ _ _ _ 0 0 % C7.2.179 LDUR (SIMD and FP)
 0 x 1 0 1 1 1 1 s s i ... _ | 0 0 0 0 h 0 % C7.2.180 MLA (by element)
 0 x 0 0 1 1 1 0 s s 1 ... _ | 1 0 0 1 0 1 % C7.2.181 MLA (vector)
 0 x 1 0 1 1 1 1 s s i ... _ | 0 1 0 0 h 0 % C7.2.182 MLS (by element)
@@ -317,12 +317,12 @@ x x 1 1 1 1 0 0 x 1 0 ... _ | _ _ _ _ 0 0 % C7.2.179 LDUR (SIMD&FP)
 0 1 0 1 1 1 1 0 0 0 0 ... _ | 0 0 0 0 0 1 % C7.2.184 MOV (scalar) % C7.2.32 DUP (element)
 0 1 1 0 1 1 1 0 0 0 0 ... _ | 0 _ _ _ _ 1 % C7.2.185 MOV (element) % C7.2.160 INS (element)
 0 1 0 0 1 1 1 0 0 0 0 ... _ | 0 0 0 1 1 1 % C7.2.186 MOV (from general) % C7.2.161 INS (general)
-0 x 0 0 1 1 1 0 1 0 1 ... _ | 0 0 0 1 1 1 % C7.2.187 MOV (vector) % C7.2.198 ORR (vector, register) 
+0 x 0 0 1 1 1 0 1 0 1 ... _ | 0 0 0 1 1 1 % C7.2.187 MOV (vector) % C7.2.198 ORR (vector, register)
 0 x 0 0 1 1 1 0 0 0 0 ... 0 | 0 0 1 1 1 1 % C7.2.188 MOV (to general)
 0 x s 0 1 1 1 1 0 0 0 ... _ | _ _ _ _ 0 1 % C7.2.189 MOVI
 0 x 0 0 1 1 1 1 s s i ... _ | 1 0 0 0 h 0 % C7.2.190 MUL (by element)
 0 x 0 0 1 1 1 0 s s 1 ... _ | 1 0 0 1 1 1 % C7.2.191 MUL (vector)
-0 x 1 0 1 1 1 0 0 0 1 ... 0 | 0 1 0 0 1 1 % C7.2.192 MVN % C7.2.195 NOT 
+0 x 1 0 1 1 1 0 0 0 1 ... 0 | 0 1 0 0 1 1 % C7.2.192 MVN % C7.2.195 NOT
 0 x 1 0 1 1 1 1 0 0 0 ... _ | _ _ _ _ 0 1 % C7.2.193 MVNI
 0 x 1 0 1 1 1 0 s s 1 ... 0 | 1 0 1 1 1 1 % C7.2.194 NEG (vector)
 0 x 0 0 1 1 1 0 1 1 1 ... _ | 0 0 0 1 1 1 % C7.2.196 ORN (vector)
@@ -440,11 +440,11 @@ x 0 0 1 1 1 1 0 s s 1 ... 0 | 0 0 0 0 0 0 % C7.2.221 SCVTF (scalar, integer)
 0 x 0 0 1 1 0 1 i 0 0 ... _ | x x 1 s s s % C7.2.310 ST3 (single structure)
 0 x 0 0 1 1 0 0 x 0 0 ... _ | 0 0 0 0 s s % C7.2.311 ST4 (multiple structures)
 0 x 0 0 1 1 0 1 0 0 1 ... 0 | x x 1 s s s % C7.2.312 ST4 (single structure)
-s s 1 0 1 1 0 0 0 0 _ ... _ | _ _ _ _ _ _ % C7.2.313 STNP (SIMD&FP)
-s s 1 0 1 1 0 i i 0 _ ... _ | _ _ _ _ _ _ % C7.2.314 STP (SIMD&FP)
-s s 1 1 1 1 0 0 x 0 0 ... _ | _ _ _ _ i 1 % C7.2.317 STUR (SIMD&FP)
-s s 1 1 1 1 0 0 x 0 1 ... _ | _ _ _ _ 1 0 % C7.2.316 STR (register, SIMD&FP)
-s s 1 1 1 1 0 0 x 0 0 ... _ | _ _ _ _ 0 0 % C7.2.317 STUR (SIMD&FP)
+s s 1 0 1 1 0 0 0 0 _ ... _ | _ _ _ _ _ _ % C7.2.313 STNP (SIMD and FP)
+s s 1 0 1 1 0 i i 0 _ ... _ | _ _ _ _ _ _ % C7.2.314 STP (SIMDFP)
+s s 1 1 1 1 0 0 x 0 0 ... _ | _ _ _ _ i 1 % C7.2.317 STUR (SIMD and FP)
+s s 1 1 1 1 0 0 x 0 1 ... _ | _ _ _ _ 1 0 % C7.2.316 STR (register, SIMD and FP)
+s s 1 1 1 1 0 0 x 0 0 ... _ | _ _ _ _ 0 0 % C7.2.317 STUR (SIMD and FP)
 0 x 1 0 1 1 1 0 s s 1 ... _ | 1 0 0 0 0 1 % C7.2.318 SUB (vector)
 0 x 0 0 1 1 1 0 s s 1 ... _ | 0 1 1 0 0 0 % C7.2.319 SUBHN, SUBHN2
 0 x 0 0 1 1 1 0 s s 1 ... 0 | 0 0 1 1 1 0 % C7.2.320 SUQADD
