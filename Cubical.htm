@@ -32,6 +32,30 @@
         <p>Формальна граматика цієї мови, окрім <a href="http://www.cse.chalmers.se/~coquand/cubicaltt.pdf">оригінальної статті CCHM</a> описана
            також в статі про <a href="https://github.com/groupoid/groupoid.space/blob/master/tex/articles/mltt/mltt.pdf">мінімальну конструктивну мову MLTT<sup>&infin;</sup></a>, яку можна вбудувати саму в себе.
            Але тут представлена актуальна версія грамматики в LALR(1) флейворі, для платформи Erlang, та її бібліотек leex та yeec, токен та парсер генераторів.</p>
+       <h4>LEEX</h4>
+    <figure><code style="font-size:8pt;">
+A = [a-zA-Z_0-9\-\x{2074}-\x{208E}\x{2010}-\x{2191}\x{2193}-\x{2199}\x{2201}-\x{25FF}\x{3B1}-\x{3BA}\x{3BC}-\x{3FF}]
+S = ([\t\s\r\n]|--.*)
+B = [\r\n]
+Star    = \*
+Unit    = \(\)
+Slash   = \\
+Dot     = \.
+Comma   = \,
+Arrow   = (\->|\→)
+Forall  = (\\/|\∀)
+Meet    = (/\\)
+Lambda  = (\\|\λ)
+Curly   = [\{\}]
+Angle   = [\<\>]
+Parens  = [\(\)]
+Square  = [\[\]]
+Colon   = \:
+Et      = \@
+Eq      = \=
+Pipe    = \|
+   </code></figure>
+       <h4>YEEC</h4>
     <figure><code style="font-size:8pt;">
 mod -> 'module' id 'where' imp dec : {module,'$2','$3','$4','$5'}.
 imp -> skip imp : '$2'.
