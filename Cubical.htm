@@ -18,7 +18,7 @@
   <article>
     <section>
        <h3>INTRO</h3>
-        <p>Мова кубічного тайпчекера cubicaltt, синтаксис якого базується на попередній мові cubical,
+        <p>Мова кубічного тайпчекера <a href="https://github.com/mortberg/cubicaltt">cubicaltt</a>, синтаксис якого базується на попередній мові <a href="https://github.com/simhu/cubical">cubical</a>,
            про яку йшлося на <a href="https://tonpa.guru/stream/2017/2017-03-16%20HoTT%20%D0%BD%D0%B0%201%20%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B5.txt">сторінках
            журналу МАКСИМ</a> в 2017 році. Сам cubical у свою чергу базується на <a href="http://www.cse.chalmers.se/~bengt/papers/GKminiTT.pdf">японському тайпчекері Mini-TT</a>,
            розмір якого на мові Haskell займає 400 рядків. Синтаксис мови у БНФ нотації є максимально компактним та не передбачає ускладнених конструкції
@@ -115,7 +115,8 @@ sum -> '$empty' : [].
 sum -> id tele : {ctor,'$1','$2'}.
 sum -> id tele '|' sum : [{ctor,'$1','$2'}|'$4'].
    </code></figure>
-      <p></p>
+       <h3>RUN</h3>
+      <p>Для запуску кубічного синтаксичного фронтенду використайте <a href="https://mad.n2o.dev">MAD</a>.</p>
    <figure><code style="font-size:8pt;">
 $ git clone git@github.com:groupoid/hts && cd hts
 $ mad dep com pla bun cub
