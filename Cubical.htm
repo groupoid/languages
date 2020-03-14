@@ -114,6 +114,14 @@ def -> id tele ':' exp '=' exp 'where' def : {def,'$1','$2','$4','$6','$8'}.
 sum -> '$empty' : [].
 sum -> id tele : {ctor,'$1','$2'}.
 sum -> id tele '|' sum : [{ctor,'$1','$2'}|'$4'].
+
+Nonterminals mod imp tele exp app dec def ids sum cotele br brs cobrs
+             codec formula dir f1 f2 side sides sys papp rsum.
+
+Terminals id digits atom oper arrow forall skip lam meet
+          '(' ')' '[' ']' '<' '>' '{' '}' '.' ',' ':' '=' '#' '|' '+' '-' '*' '/' '@' '0' '1'
+          'module' 'where' 'import' 'record' 'data' 'let' 'in' '.1' '.2'
+          'split' 'comp' 'fill' 'glue' 'unglue'.
    </code></figure>
        <h3>RUN</h3>
       <p>Для запуску кубічного синтаксичного фронтенду використайте <a href="https://mad.n2o.dev">MAD</a>.</p>
