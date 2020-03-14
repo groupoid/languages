@@ -126,7 +126,7 @@ def -> 'data' id tele '=' sum : {data,'$2','$3','$5'}.
 def -> id tele ':' exp '=' exp : {def,'$1','$2','$4','$6'}.
 def -> id tele ':' exp '=' exp 'where' def : {def,'$1','$2','$4','$6','$8'}.
 
-% inductive and HIT introduction
+% inductive and HIT introductions
 
 sum -> '$empty' : [].
 sum -> rsum : '$1'.
