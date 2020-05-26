@@ -17,9 +17,79 @@
 <main>
   <article>
     <section>
+
        <h3>INTRO</h3>
-        <p></p>
+
+    <figure><img src="https://pbs.twimg.com/media/EY5zZeUWkAAP6u7?format=jpg&name=4096x4096"/></figure>
+
+    <p>Сразу хочу сказать, что пост будет абсолютно необъективным и иррациональным,
+       ведь речь сегодня пойдёт об ООП. Если говорить серьезно об ООП или пытаться хотя бы,
+       то в большинстве случаев это всё конечно же третьекультурные феномены за исключением только
+       ООП в зависимых типах от Луки Карделли и, вот, Смоллтолк-80.</p>
+
+    <p>Я был рожден в мире, в котором уже существовало функциональное программирование,
+       но ООП еще не было, оно появлялось на моих глазах. Мы обсуждали ООП в курилке может ли оно
+       заменить массивы с типизированными указателями на паскале или нет.
+       Когда наконец понял зачем оно нужно, понял также что ООП радости мне не принесёт,
+       и через 5 лет рабочей практики я дропнулся с ООП откатившись к функциональному программированию,
+       в 70-е, где и остаюсь до сих пор.</p>
+
+    <p>Сейчас же я хочу воспользоваться возможностью попиарить Смоллтолк-80 и
+       философию минимализма в индустрии программного обеспечения на его примере,
+       хотя конечно никто не думал, в те времена, что это компактная система.</p>
+
+    <p>Если вы помните историю про Стива Джобса, то по легенде он идёт в компанию XEROX PARC
+       (НИИ в Пало Альто), где видит Smalltalk-80 и уходит создавать Apple Macintosh, т.е.
+       формально это не только одна из первых ООП систем, но и первый в мире промышленный
+       графический интерфейс. Алан Кей и ребята уже потом подтянулись, так что простите, упоминаться не будут.
+       Основной автор книг, популяризатор, коммерциализатор и ключевой человек проекта Адель Голберг.
+       Она не только формальный автор языка Smalltalk-80, но и руководитель проекта.</p>
+
+    <p>Технически Smalltalk-80 представляет собой компактную виртуальную машину
+       с примитивами для вызова сообщений, управления стеком и регистрами.
+       Все это линкуется вместе с графическим интерфейсом и в условиях элементной базы
+       прошлого это всё должно помещаться в 64КБ ROM. Поверх этого ядра строится пространство
+       памяти из слепка файлов программ, которые загружаются в память последовательно
+       и редактируются в графическом эксплорере, который
+       стал прототипом для файловых навигаторов  NeXT, Mac, OCaml. В этом объектном
+       браузере вы можете редактировать и выполнять любой участок кода системы
+       включая обновление кода планировщика. В системе всегда доступна возможность
+       выйти в дебаггер, переписать мир, и вернуться в контекст, впрочём и его можно подменить.
+       Естественно, поддерживается возможность сохранить контекст всей виртуальной машины
+       и перенести его на другую платформу -- фича которая определяет первокультурность
+       окружения тру хакера или просто современного разработчика. В такой первокультурный класс
+       систем входят, пожалуй, только лисп-машины LMI и Symbolics. Даже Эрланг и APL не дотянули до этого класса.
+       Фактически, сегодня такие системы никому не нужны, никто не инвестирует деньги в это
+       (разве что в юникернелы и то), это тайное знание, которое преедается устно от мастера ученику. </p>
+
+    <p>При старте системы вы получали десктоп с оконным менеджером, файловым редактором, отладчиком,
+       графическим редактором и базовой библиотекой. Реализовать это всё в таком объеме можно
+       вынеся всю имплементацию на диск, базовый "образ", который представляет из себя
+       вариацию tar архива размером с 1.5МБ (в те времена дискета) в PLAIN TEXT Smalltalk-80.</p>
+
+    <p>Долгое время сотрудники XEROX инвестировали сначала в Squeak,
+       потом начали в Pharo, но системы эти переработаны значительно,
+       не обладали аутентичностью XEROX, запустить оригинальные образы было не в чем.
+       В карантин 2020 Ден Банай решил написать имплементацию ВМ для оригинального смолтолковского образа из НИИ
+       и доступно это прямо на Github &mdash; <a href="https://github.com/dbanay/Smalltalk">Smalltalk-80</a>!
+       Теперь ИТ археологи имеют возможность запустить оригинальное первокультурное
+       рабочее окружение и посмотреть как оно было в 1980 не только на Tektronix 4406 но и на Windows, Linux и Mac.
+       Возможно даже склепать на ардуино микро-компьютер с видеоадаптером который будет крутить исключительно Smalltalk-80.</p>
+
+    <p>До этого момент я думал, что операционные системы прошлого нужно преподавать с BeOS,
+       а юникернелы только с Erlang и OCaml, но сейчас вижу, что Smalltalk-80 вполне мог бы
+       стать упоротой базой для унифицированых окружений, которая могла бы составить конкуренцию
+       на рынке юникернелов (ну или как минимум классифицируется таким образом).
+       Всё в иплементации красиво и на своём месте, вполне допускаю что делался очень близкий порт по духу, хотя автор говорит, что писал по "синей книге", видимо он достиг такого уровня имперсонификации, что его можно назвать соавтором виртуальной машины.
+       Стрипнутый бинарник на маке минимально 120КБ, а на винде все 300КБ. С поправкой
+       на релокейшин таблицы в 64-битных платформах вполне допускаю, что на 8-битной
+       платформе можно засунуть имплементацию в 64КБ. Ну вот ERP писать на Smalltalk-80 можно писать прямо сейчас :-)
+       Все, кто так или иначе хочет ознакомиться с первокультурным ООП, предлагаю скачать
+       и собрать Smalltalk-80 с гитхаба, и уделить некоторое внимание
+       исходникам &mdash; я вот начал и два дня не могу остановиться.</p>
+
        <h3>GRAMMAR</h3>
+
     <figure><code style="font-size:8pt;">
   Character = ? Any Unicode character ?;
   WhitespaceCharacter = ? Any space, newline or horizontal tab character ?;
@@ -59,9 +129,11 @@
   SymbolLiteral = "#", (SymbolInArrayLiteral | ConstantReference | StringLiteral);
   ArrayLiteral = ObjectArrayLiteral | ByteArrayLiteral;
   ObjectArrayLiteral = "#", NestedObjectArrayLiteral;
-  NestedObjectArrayLiteral = "(", OptionalWhitespace, [LiteralArrayElement, {Whitespace, LiteralArrayElement}], OptionalWhitespace, ")";
+  NestedObjectArrayLiteral = "(", OptionalWhitespace,
+        [LiteralArrayElement, {Whitespace, LiteralArrayElement}], OptionalWhitespace, ")";
   LiteralArrayElement = Literal - BlockLiteral | NestedObjectArrayLiteral | SymbolInArrayLiteral | ConstantReference;
-  ByteArrayLiteral = "#[", OptionalWhitespace, [UnsignedIntegerLiteral, {Whitespace, UnsignedIntegerLiteral}], OptionalWhitespace,"]";
+  ByteArrayLiteral = "#[", OptionalWhitespace,
+        [UnsignedIntegerLiteral, {Whitespace, UnsignedIntegerLiteral}], OptionalWhitespace,"]";
   FormalBlockArgumentDeclaration = ":", BindableIdentifier;
   FormalBlockArgumentDeclarationList = FormalBlockArgumentDeclaration, {Whitespace, FormalBlockArgumentDeclaration};
   BlockLiteral = "[", [OptionalWhitespace, FormalBlockArgumentDeclarationList, OptionalWhitespace, "|"], ExecutableCode, OptionalWhitespace, "]";
@@ -85,7 +157,8 @@
   Statement = {AssignmentOperation}, OptionalWhitespace, Expression;
   MethodReturnOperator = OptionalWhitespace, "^";
   FinalStatement = [MethodReturnOperator], Statement;
-  LocalVariableDeclarationList = OptionalWhitespace, "|", OptionalWhitespace, [BindableIdentifier, {Whitespace, BindableIdentifier}], OptionalWhitespace, "|";
+  LocalVariableDeclarationList = OptionalWhitespace, "|", OptionalWhitespace,
+        [BindableIdentifier, {Whitespace, BindableIdentifier}], OptionalWhitespace, "|";
   ExecutableCode = [LocalVariableDeclarationList], [{Statement, OptionalWhitespace, "."}, FinalStatement, ["."]];
   UnaryMethodHeader = UnaryMessageSelector;
   BinaryMethodHeader = BinaryMessageSelector, OptionalWhitespace, BindableIdentifier;
@@ -94,6 +167,15 @@
   MethodHeader = UnaryMethodHeader | BinaryMethodHeader | KeywordMethodHeader;
   MethodDeclaration = OptionalWhiteSpace, MethodHeader, ExecutableCode;
      </code></figure>
+
+    <br/>
+    <hr>
+    <br/>
+
+    <p> [1]. <b><a href="http://sdmeta.gforge.inria.fr/FreeBooks/BitsOfHistory/BitsOfHistory.pdf">Smalltalk-80. Bits of History, Words of Advice</a></b>. Glenn Krasner. 1984.<br/>
+        [2]. <b><a href="http://stephane.ducasse.free.fr/FreeBooks/BlueBook/Bluebook.pdf">Blue Book. Smalltalk-80: The language and its implementation</a></b>. <br/> Adele Goldberg and David Robson. 1983.<br/>
+    </p>
+
     </section>
   </article>
 </main>
