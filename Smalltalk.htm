@@ -136,7 +136,8 @@
         [UnsignedIntegerLiteral, {Whitespace, UnsignedIntegerLiteral}], OptionalWhitespace,"]";
   FormalBlockArgumentDeclaration = ":", BindableIdentifier;
   FormalBlockArgumentDeclarationList = FormalBlockArgumentDeclaration, {Whitespace, FormalBlockArgumentDeclaration};
-  BlockLiteral = "[", [OptionalWhitespace, FormalBlockArgumentDeclarationList, OptionalWhitespace, "|"], ExecutableCode, OptionalWhitespace, "]";
+  BlockLiteral = "[", [OptionalWhitespace, FormalBlockArgumentDeclarationList, OptionalWhitespace, "|"],
+        ExecutableCode, OptionalWhitespace, "]";
   Literal = ConstantReference | IntegerLiteral | ScaledDecimalLiteral  | FloatingPointLiteral
           | CharacterLiteral | StringLiteral | SymbolLiteral | ArrayLiteral | BlockLiteral;
   NestedExpression = "(", Statement, OptionalWhitespace, ")";
